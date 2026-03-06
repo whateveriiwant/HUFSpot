@@ -1,0 +1,40 @@
+name: Daily Classroom Crawler
+
+on:
+  schedule:
+    # 매일 새벽 2시 (KST) = 17:00 UTC
+    - cron: '0 17 * * *'
+  workflow_dispatch: # 수동 실행 버튼 활성화
+
+jobs:
+  crawl:
+    name: Crawl HUFS Schedule
+    runs-on: ubuntu-latest
+    timeout-minutes: 60 # 전공 149개 × 1.5초 딜레이 = 최대 약 15분
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run crawler
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: npm run crawl
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ 크롤러 실패! GitHub Actions 로그를 확인하세요."
+          echo "Repository: ${{ github.repository }}"
+          echo "Run ID: ${{ github.run_id }}"
