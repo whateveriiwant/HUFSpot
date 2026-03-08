@@ -29,7 +29,7 @@ export default function RootLayout({
             'bg-white',
             'overflow-x-hidden',
             'shadow-[0_0_40px_rgba(0,0,0,0.08)]',
-            'px-4 py-10',
+            'px-6 py-10',
           ].join(' ')}
         >
           {children}
