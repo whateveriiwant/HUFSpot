@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { CAMPUSES } from '@/entities/campus/model/campus';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'; // Shared 계층
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import {
   Field,
   FieldContent,
