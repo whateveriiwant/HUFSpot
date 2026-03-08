@@ -34,31 +34,20 @@ export const RoomFinderWidget = ({ devOverride }: RoomFinderWidgetProps) => {
     if (value === 'H1' || value === 'H2') setCampus(value as Campus);
   }, []);
 
-  const scrollToSectionBottom = () => {
-    const section = section2Ref.current;
-    if (!section) return;
+  const scrollToSectionHeader = () => {
+    setTimeout(() => {
+      const section = section2Ref.current;
+      if (!section) return;
 
-    const rect = section.getBoundingClientRect();
-    const sectionBottom = window.scrollY + rect.bottom;
-    const maxScrollTop =
-      document.documentElement.scrollHeight - window.innerHeight;
-    const targetTop = Math.min(
-      Math.max(sectionBottom - window.innerHeight, 0),
-      maxScrollTop
-    );
-
-    window.scrollTo({ top: targetTop, behavior: 'smooth' });
+      const targetTop = section.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: targetTop, behavior: 'smooth' });
+    }, 50);
   };
 
   useEffect(() => {
     if (!selectedBuilding) return;
-
-    const rafId = window.requestAnimationFrame(() => {
-      scrollToSectionBottom();
-    });
-
-    return () => window.cancelAnimationFrame(rafId);
-  }, [selectedBuilding, loading, floorData.length]);
+    scrollToSectionHeader();
+  }, [selectedBuilding]);
 
   const handleBuildingSelect = async (building: Building) => {
     const info = getCurrentInfo(devOverride ?? undefined);
@@ -132,7 +121,7 @@ export const RoomFinderWidget = ({ devOverride }: RoomFinderWidgetProps) => {
       </div>
 
       {selectedBuilding && (
-        <div ref={section2Ref} className="pt-6 pb-10">
+        <div ref={section2Ref} className="min-h-dvh flex flex-col pt-6 pb-10">
           <p className="text-sm font-medium text-muted-foreground">
             {selectedBuilding.emoji} {selectedBuilding.name} · {timeLabel}
           </p>
