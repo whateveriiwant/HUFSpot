@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import React from 'react';
@@ -15,12 +15,20 @@ export const metadata: Metadata = {
   description: '한국외국어대학교 실시간 빈 강의실 조회',
 };
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#ffffff',
+  colorScheme: 'light',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ko" className={pretendard.variable}>
-      <body className="min-h-screen bg-[#f5f5f7] font-sans antialiased flex justify-center">
+      <body className="min-h-screen bg-white md:bg-[#f5f5f7] font-sans antialiased flex justify-center">
         <div
           className={[
             'relative',
