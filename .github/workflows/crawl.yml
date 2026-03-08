@@ -3,7 +3,7 @@ name: Daily Classroom Crawler
 on:
   schedule:
     # 매일 새벽 2시 (KST) = 17:00 UTC
-    - cron: '0 17 * * *'
+    - cron: "0 17 * * *"
   workflow_dispatch: # 수동 실행 버튼 활성화
 
 jobs:
@@ -19,8 +19,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '24'
-          cache: 'npm'
+          node-version: "24"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
