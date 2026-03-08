@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import { ChevronRight, MoveUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -117,6 +118,15 @@ export const RoomFinderWidget = ({ devOverride }: RoomFinderWidgetProps) => {
               <ChevronRight className="text-muted-foreground" />
             </Button>
           ))}
+        </div>
+
+        <div className="mt-4 flex justify-end">
+          <Link
+            href="/?resetCampus=1"
+            className="text-sm font-medium text-muted-foreground underline-offset-4 hover:underline"
+          >
+            캠퍼스 선택으로 돌아가기
+          </Link>
         </div>
       </div>
 
